@@ -1,18 +1,18 @@
 #!/usr/bin/ruby
 
 =begin
-Integery dostanou dvě nové funkce:
-* ciferny_soucet provede jednorázový
-  ciferný součet.
-  Např. 128.ciferny_soucet = 11.
-* ciferace provádí ciferný součet
-  tak dlouho, dokud není výsledek
-  pouze jednomístný.
-  Např. 128.ciferace = 2.
+Two new methods for integers, useful
+for solving mystery-caches.
+* figure_sum
+  E.g. 128.figure_sum = 11.
+* recursive_figure_sum does the figure
+  sum again and again, until the result
+  has only one figure.
+  E.g. 128.recursive_figure_sum = 2.
 =end
 
 class Fixnum
-  def ciferny_soucet
+  def figure_sum
     soucet = 0
     self.to_s.each_char do |char|
       soucet += char.to_i
@@ -21,10 +21,10 @@ class Fixnum
     soucet
   end
 
-  def ciferace
+  def recursive_figure_sum
     cif = self
     begin
-      cif = cif.ciferny_soucet
+      cif = cif.figure_sum
     end while cif.to_s.length > 1
     cif
   end

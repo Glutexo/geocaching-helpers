@@ -3,26 +3,27 @@
 =begin
 Eiffelovka (GC4T25E)
 
-Spočte veškerá možná řešení podle toho, co víme o
-indicii: Je trojmísná a její ciferný součet je 6.
-Dále po úpravách, po kterých se dosazuje hodnota
-do souřadnic, musí být dosazované číslo stále
-kladné a trojmístné, aby byly souřadnice platné.
+Prints out all possible combination for the
+clue ‘A’. It must have three figures and its
+figure sum has to be 6. Only valid coordina-
+tes are printed out.
+
+DISCLAIMER:
+This script does not solve the riddle and
+does not calculate the final coordinates. It
+only prints out all possible options, that
+can be figured out from the listing.
+
+If it is uncomfortable for the geocache au-
+thor for this script to be publicly availa-
+ble, please contact me at driezasson@me.com.
 =end
 
-require './ciferace.rb'
+require './solver.rb'
 
-# Všechna trojciferná čísla
-# s cifernýcm součtem 6.
-(100..999).each do |a|
-  next unless a.ciferny_soucet === 6
-
-  n = a - 52
-  e = a * 3 - 37
-
-  # Jen kladné a nejvýše trojmístné hodnoty,
-  # tj. dosaditelné do souřadnic.
-  next if n > 999 or e > 999 or n < 0 or e < 0
-
-  puts sprintf "A = %d: N 49° 46.%03d E 018° 13.%03d", a, n, e
-end
+GeocacheSolver::combinations figure_count: 3,
+                             figure_sum: 6,
+                             transform_functions: { latitude: lambda { |x| x - 52 },
+                                                    longitude: lambda { |x| x * 3  - 37 } },
+                             coordinates: { latitude: { degrees: 49, minutes: 46 },
+                                            longitude: { degrees: 18, minutes: 13 } }
